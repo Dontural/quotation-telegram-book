@@ -1,0 +1,11 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: quotation-book
+
+app:
+  src-file-path: "/src.txt"
+  userName: "turall_bot"
+  token: "7030690954:AAF_1pEILZLMkIq6q4oNyp4ocOnQ4M0lEEU"
