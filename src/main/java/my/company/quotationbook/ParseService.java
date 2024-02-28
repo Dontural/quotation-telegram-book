@@ -3,13 +3,10 @@ package my.company.quotationbook;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,16 +24,24 @@ public class ParseService {
 
     @PostConstruct
     void init() throws IOException {
-        File file = new ClassPathResource(srcFilePath).getFile();
+        InputStream fstream = this.getClass().getResourceAsStream(srcFilePath);
 
-        String content = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
-        quotas.addAll(Arrays.stream(content.split(System.lineSeparator())).toList());
+        StringBuilder textBuilder = new StringBuilder();
+        try (Reader reader = new BufferedReader(new InputStreamReader
+                (fstream, StandardCharsets.UTF_8))) {
+            int c = 0;
+            while ((c = reader.read()) != -1) {
+                textBuilder.append((char) c);
+            }
+        }
+
+        quotas.addAll(Arrays.stream(textBuilder.toString().split(System.lineSeparator())).toList());
         log.info("");
     }
 
 
     public String getQuota() {
-        return quotas.get(random.nextInt(quotas.size()-1));
+        return quotas.get(random.nextInt(quotas.size() - 1));
     }
 }
 
