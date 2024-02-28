@@ -29,4 +29,6 @@ dependencies {
     implementation("commons-io:commons-io:2.15.1")
     implementation 'org.telegram:telegrambots-spring-boot-starter:6.9.7.1'
     implementation 'org.telegram:telegrambotsextensions:6.9.7.1'
+     // Добавляем зависимость Logback
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
 }
